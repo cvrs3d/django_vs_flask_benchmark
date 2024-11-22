@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - django_vs_flask:/var/lib/postgresql/data
+
+
+  django:
+    build: ./django_app
+    volumes:
+      - ./django_app:/usr/src/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  flask:
+    build: ./flask_app
+    volumes:
+      - ./flask_app:/usr/src/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  locust:
+    image: locustio/locust
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./locust:/mnt/locust
+    depends_on:
+      - django
+      - flask
+    command: -f /mnt/locust/locustfile.py
+
+volumes:
+  django_vs_flask:
