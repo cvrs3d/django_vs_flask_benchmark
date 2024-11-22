@@ -21,28 +21,45 @@ services:
       - ./django_app:/usr/src/app
     ports:
       - "8000:8000"
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: postgres
+      DB_PORT: 5432
     depends_on:
-      - db
+      - postgres
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
 
-  flask:
-    build: ./flask_app
-    volumes:
-      - ./flask_app:/usr/src/app
-    ports:
-      - "5000:5000"
-    depends_on:
-      - db
-
-  locust:
-    image: locustio/locust
-    ports:
-      - "8089:8089"
-    volumes:
-      - ./locust:/mnt/locust
-    depends_on:
-      - django
-      - flask
-    command: -f /mnt/locust/locustfile.py
+#  flask:
+#    build: ./flask_app
+#    volumes:
+#      - ./flask_app:/usr/src/app
+#    ports:
+#      - "5000:5000"
+#    environment:
+#      DB_USER: ${DB_USER}
+#      DB_PASS: ${DB_PASS}
+#      DB_NAME: ${DB_NAME}
+#    depends_on:
+#      - db
+#
+#  locust:
+#    image: locustio/locust
+#    ports:
+#      - "8089:8089"
+#    volumes:
+#      - ./locust:/mnt/locust
+#    depends_on:
+#      - django
+#      - flask
+#    command: -f /mnt/locust/locustfile.py
 
 volumes:
   django_vs_flask:
+    
+networks:
+  default:
+    driver: bridge
+    
