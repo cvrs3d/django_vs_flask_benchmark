@@ -1,5 +1,8 @@
-from django.http import HttpResponse
+from rest_framework import viewsets
+from .models import Order
+from .serializers import OrderSerializer
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+class OrderViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
