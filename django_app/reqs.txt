@@ -4,3 +4,4 @@ djangorestframework
 faker
 aiomultiprocess
 asyncio
+gunicorn

@@ -6,9 +6,9 @@ def generate_order_urls(base_url, num_records, output_file):
 
 
 if __name__ == "__main__":
-    BASE_URL = "http://localhost:8000"
+    BASE_URL = ""
     NUM_RECORDS = 1000000
-    OUTPUT_FILE = "order_urls.txt"
+    OUTPUT_FILE = "../locust/order_urls.txt"
 
     generate_order_urls(BASE_URL, NUM_RECORDS, OUTPUT_FILE)
     print(f"Все URL-адреса успешно записаны в {OUTPUT_FILE}")
