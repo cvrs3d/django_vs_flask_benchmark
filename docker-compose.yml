@@ -15,12 +15,27 @@ services:
       - django_vs_flask:/var/lib/postgresql/data
 
 
-  django:
-    build: ./django_app
+#  django:
+#    build: ./django_app
+#    volumes:
+#      - ./django_app:/usr/src/app
+#    ports:
+#      - "8000:8000"
+#    environment:
+#      DB_USER: ${DB_USER}
+#      DB_PASS: ${DB_PASS}
+#      DB_NAME: ${DB_NAME}
+#      DB_HOST: postgres
+#      DB_PORT: 5432
+#    depends_on:
+#      - postgres
+
+  flask:
+    build: ./flask_app
     volumes:
-      - ./django_app:/usr/src/app
+      - ./flask_app:/usr/src/app
     ports:
-      - "8000:8000"
+      - "5000:5000"
     environment:
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
@@ -29,19 +44,6 @@ services:
       DB_PORT: 5432
     depends_on:
       - postgres
-
-#  flask:
-#    build: ./flask_app
-#    volumes:
-#      - ./flask_app:/usr/src/app
-#    ports:
-#      - "5000:5000"
-#    environment:
-#      DB_USER: ${DB_USER}
-#      DB_PASS: ${DB_PASS}
-#      DB_NAME: ${DB_NAME}
-#    depends_on:
-#      - db
 #
 #  locust:
 #    build:
@@ -58,7 +60,7 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - django
+      - flask
 
 volumes:
   django_vs_flask:

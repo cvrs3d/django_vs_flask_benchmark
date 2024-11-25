@@ -2,7 +2,6 @@
 This project is dedicated to the comparison and testing of two popular Python web frameworks - Django and Flask 
 
 within the context of load testing. The project forms part of a thesis.
-
 ## Description
 In this project, an analysis of performance and efficiency of two web frameworks - Django and Flask - is being conducted.
 
